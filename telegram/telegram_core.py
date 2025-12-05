@@ -74,7 +74,7 @@ def telegram_command_loop():
                             "⭐ *UPGRADE KE VIP*\n\n"
                             "Paket VIP memberikan:\n"
                             "• Sinyal *unlimited* setiap hari\n"
-                            "• Akses penuh IMB signal\n\n"
+                            "• Akses penuh BOT signal\n\n"
                             "Hubungi admin untuk upgrade:\n"
                             f"`{TELEGRAM_ADMIN_USERNAME}`.",
                             chat_id,
