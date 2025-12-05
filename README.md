@@ -1,0 +1,2 @@
+# sniper-bot
+sniper-bot
