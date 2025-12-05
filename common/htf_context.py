@@ -1,4 +1,4 @@
-# imb/htf_context.py
+# common/htf_context.py
 # Ambil konteks HTF (15m & 1h) sederhana tanpa indikator:
 # - trend UP / DOWN / RANGE di 1h
 # - posisi harga di dalam range (DISCOUNT / PREMIUM / MID) untuk 1h & 15m
