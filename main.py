@@ -1,26 +1,21 @@
 # main.py
-# Entry point bot Sniper Reversal
+# Entry point: start Telegram command loop + Binance Sniper stream loop.
 
 import asyncio
+import threading
 
-from binance.binance_stream import run_sniper_stream
-from telegram.telegram_core import run_telegram_bot
 from core.bot_state import state
-from sniper.sniper_settings import sniper_settings
-
-
-async def main():
-    print("🚀 SNIPER REVERSAL BOT started")
-
-    # set default minimal tier untuk sinyal
-    if not state.min_tier:
-        state.min_tier = sniper_settings.default_min_tier
-
-    await asyncio.gather(
-        run_telegram_bot(),   # reuse dari project lama
-        run_sniper_stream(),  # stream Binance khusus sniper
-    )
+from telegram.telegram_core import telegram_command_loop
+from binance.binance_stream import run_sniper_bot
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    # Jalankan loop command Telegram di thread terpisah
+    cmd_thread = threading.Thread(target=telegram_command_loop, daemon=True)
+    cmd_thread.start()
+
+    try:
+        asyncio.run(run_sniper_bot())
+    except KeyboardInterrupt:
+        state.running = False
+        print("Bot dihentikan oleh user (CTRL+C).")
