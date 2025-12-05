@@ -45,9 +45,9 @@ def _send_signal_telegram(result: Dict):
 
 
 async def _handle_kline_stream():
-    # pakai setting dinamis dari panel (state)
+    # pakai setting dinamis dari state (bisa diubah via Telegram)
     symbols = get_usdt_pairs(
-        max_pairs=state.max_usdt_pairs,
+        max_pairs=state.max_pairs,
         min_volume_usdt=state.min_volume_usdt,
     )
 
@@ -56,7 +56,8 @@ async def _handle_kline_stream():
         await asyncio.sleep(10)
         return
 
-    print(f"Sniper scanning {len}(symbols) pair...")
+    print(f"Sniper scanning {len(symbols)} pair "
+          f"(min_volume_usdt={state.min_volume_usdt:,.0f})")
 
     stream_names = [f"{s}@kline_5m" for s in symbols]
     url = f"{BINANCE_WS_URL}?streams={'/'.join(stream_names)}"
@@ -90,7 +91,7 @@ async def _handle_kline_stream():
             buf = _candles_5m.setdefault(symbol, [])
             buf.append(candle)
             if len(buf) > 300:
-                del buf[0 : len(buf) - 300]
+                del buf[0: len(buf) - 300]
 
             result = analyze_symbol_sniper(symbol, buf)
             if result:
