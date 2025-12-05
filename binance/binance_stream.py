@@ -4,14 +4,14 @@
 import asyncio
 import json
 from typing import Dict, List
+
 import websockets
 
 from binance.binance_pairs import get_usdt_pairs
-from sniper.sniper_settings import sniper_settings
 from sniper.sniper_analyzer import analyze_symbol_sniper
 from binance.ohlc_buffer import Candle
 from telegram import telegram_broadcast as tb
-
+from core.bot_state import state
 
 BINANCE_WS_URL = "wss://fstream.binance.com/stream"
 
@@ -45,9 +45,10 @@ def _send_signal_telegram(result: Dict):
 
 
 async def _handle_kline_stream():
+    # pakai setting dinamis dari panel (state)
     symbols = get_usdt_pairs(
-        max_pairs=sniper_settings.max_pairs,
-        min_volume_usdt=sniper_settings.min_volume_usdt,
+        max_pairs=state.max_usdt_pairs,
+        min_volume_usdt=state.min_volume_usdt,
     )
 
     if not symbols:
@@ -55,7 +56,7 @@ async def _handle_kline_stream():
         await asyncio.sleep(10)
         return
 
-    print(f"Sniper scanning {len(symbols)} pair...")
+    print(f"Sniper scanning {len}(symbols) pair...")
 
     stream_names = [f"{s}@kline_5m" for s in symbols]
     url = f"{BINANCE_WS_URL}?streams={'/'.join(stream_names)}"
@@ -71,7 +72,6 @@ async def _handle_kline_stream():
                 break
 
             data = json.loads(msg)
-
             if "data" not in data:
                 continue
 
@@ -80,6 +80,7 @@ async def _handle_kline_stream():
             if not kline:
                 continue
 
+            # hanya proses candle yang sudah close
             if not kline.get("x", False):
                 continue
 
