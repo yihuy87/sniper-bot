@@ -21,7 +21,7 @@ def handle_user_start(chat_id: int) -> None:
     active = "AKTIF" if chat_id in state.subscribers else "Tidak aktif"
 
     send_telegram(
-        f"🟦 SMC IMB BOT (Institutional Mitigation Block)\n\n"
+        f"🟦 SNIPER REVERSAL BOT\n\n"
         f"Status Kamu:\n"
         f"• Paket : *{pkg}*\n"
         f"• Limit : *{limit}*\n"
@@ -34,7 +34,7 @@ def handle_user_start(chat_id: int) -> None:
 
 def handle_admin_start(chat_id: int) -> None:
     send_telegram(
-        "👑 *SMC IMB BOT — ADMIN PANEL*\n\n"
+        "👑 *SNIPER REVERSAL BOT — ADMIN PANEL*\n\n"
         "Bot siap. Gunakan menu di bawah untuk kontrol penuh.",
         chat_id,
         reply_markup=get_admin_reply_keyboard(),
@@ -146,7 +146,7 @@ def handle_command(cmd: str, args: list, chat_id: int) -> None:
 
     if cmd == "/status":
         send_telegram(
-            "📊 *STATUS BOT IMB*\n\n"
+            "📊 *STATUS BOT*\n\n"
             f"Scan       : {'AKTIF' if state.scanning else 'STANDBY'}\n"
             f"Min Tier   : {state.min_tier}\n"
             f"Cooldown   : {state.cooldown_seconds} detik\n"
