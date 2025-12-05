@@ -1,4 +1,3 @@
-# config.py
 import os
 from dotenv import load_dotenv
 
@@ -27,19 +26,3 @@ SIGNAL_COOLDOWN_SECONDS = int(os.getenv("SIGNAL_COOLDOWN_SECONDS", "600"))
 
 # Refresh interval untuk daftar pair (jam)
 REFRESH_PAIR_INTERVAL_HOURS = int(os.getenv("REFRESH_PAIR_INTERVAL_HOURS", "24"))
-
-# ========== IMB SETTINGS ==========
-# TF entry IMB
-IMB_ENTRY_TF = "5m"
-
-# HTF filter (15m dan 1h) aktif atau tidak
-IMB_USE_HTF_FILTER = os.getenv("IMB_USE_HTF_FILTER", "true").lower() == "true"
-
-# Usia maksimal setup IMB (berapa candle 5m sejak impuls)
-IMB_MAX_ENTRY_AGE_CANDLES = int(os.getenv("IMB_MAX_ENTRY_AGE_CANDLES", "8"))
-
-# Minimal RR ke TP2 (misal 1.8 berarti TP2 minimal 1:1.8)
-IMB_MIN_RR_TP2 = float(os.getenv("IMB_MIN_RR_TP2", "1.8"))
-
-# Strict mode IMB
-IMB_STRICT_MODE = os.getenv("IMB_STRICT_MODE", "false").lower() == "true"
